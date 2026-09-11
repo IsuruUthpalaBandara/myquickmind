@@ -1,0 +1,2475 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>MindFlash</title>
+
+<meta
+    name="description"
+    content="Test your memory with MindFlash. Memorize, recall and challenge your friends."
+>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f5f5f5;
+
+    color: #111;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+.app {
+
+    width: 100%;
+
+    max-width: 850px;
+
+    min-height: 600px;
+
+    background: #fff;
+
+    border: 1px solid #ddd;
+
+    border-radius: 16px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+
+    padding: 25px 30px;
+
+    border-bottom: 1px solid #eee;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.logo {
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+
+.logo span {
+
+    color: #19a463;
+}
+
+
+.best-score {
+
+    font-size: 13px;
+
+    color: #777;
+}
+
+
+.best-score strong {
+
+    color: #111;
+
+    font-size: 15px;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+main {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 45px 25px;
+}
+
+
+.screen {
+
+    width: 100%;
+
+    max-width: 700px;
+
+    text-align: center;
+}
+
+
+/* =========================================
+   START SCREEN
+========================================= */
+
+.start-screen h1 {
+
+    font-size:
+        clamp(38px, 7vw, 64px);
+
+    letter-spacing: -3px;
+
+    margin-bottom: 15px;
+}
+
+
+.start-screen p {
+
+    color: #666;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+    max-width: 500px;
+
+    margin:
+        0 auto 35px;
+}
+
+
+.rules {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 35px;
+}
+
+
+.rule {
+
+    border: 1px solid #ddd;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    background: #fafafa;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+button {
+
+    border: none;
+
+    cursor: pointer;
+
+    font-family: inherit;
+}
+
+
+.play-btn {
+
+    background: #111;
+
+    color: white;
+
+    padding: 17px 45px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    transition: 0.2s;
+}
+
+
+.play-btn:hover {
+
+    background: #333;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.secondary-btn {
+
+    background: white;
+
+    color: #111;
+
+    border: 1px solid #ccc;
+
+    padding: 13px 25px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+
+.secondary-btn:hover {
+
+    background: #f5f5f5;
+}
+
+
+/* =========================================
+   GAME SCREEN
+========================================= */
+
+.game-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    font-size: 14px;
+
+    color: #777;
+}
+
+
+.timer {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #111;
+}
+
+
+.memory-area {
+
+    min-height: 250px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    background: #fafafa;
+}
+
+
+.sequence {
+
+    font-size:
+        clamp(25px, 5vw, 43px);
+
+    line-height: 1.7;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    word-spacing: 12px;
+}
+
+
+/* =========================================
+   PROGRESS
+========================================= */
+
+.progress {
+
+    height: 5px;
+
+    background: #e5e5e5;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    margin-bottom: 25px;
+}
+
+
+.progress-bar {
+
+    height: 100%;
+
+    width: 100%;
+
+    background: #111;
+
+    transition:
+        width 0.1s linear;
+}
+
+
+/* =========================================
+   ANSWER SCREEN
+========================================= */
+
+.answer-screen h2 {
+
+    font-size: 34px;
+
+    margin-bottom: 10px;
+}
+
+
+.answer-screen p {
+
+    color: #777;
+
+    margin-bottom: 25px;
+}
+
+
+textarea {
+
+    width: 100%;
+
+    height: 170px;
+
+    resize: none;
+
+    border: 1px solid #ccc;
+
+    border-radius: 10px;
+
+    padding: 18px;
+
+    font-family: inherit;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    outline: none;
+
+    transition: border 0.2s;
+}
+
+
+textarea:focus {
+
+    border-color: #111;
+}
+
+
+.submit-btn {
+
+    margin-top: 15px;
+
+    background: #111;
+
+    color: white;
+
+    padding: 15px 35px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+
+.submit-btn:hover {
+
+    background: #333;
+}
+
+
+/* =========================================
+   RESULT
+========================================= */
+
+.score-number {
+
+    font-size:
+        clamp(60px, 12vw, 100px);
+
+    font-weight: 800;
+
+    letter-spacing: -5px;
+
+    margin-bottom: 5px;
+}
+
+
+.score-label {
+
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 35px;
+}
+
+
+.stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 30px;
+}
+
+
+.stat {
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+
+    padding: 20px 10px;
+}
+
+
+.stat-number {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+
+.stat-label {
+
+    font-size: 12px;
+
+    color: #777;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.correct {
+
+    color: #19a463;
+}
+
+
+.wrong {
+
+    color: #d83b3b;
+}
+
+
+.missed {
+
+    color: #777;
+}
+
+
+/* =========================================
+   REVIEW
+========================================= */
+
+.review {
+
+    text-align: left;
+
+    margin-bottom: 30px;
+
+    border-top: 1px solid #eee;
+
+    padding-top: 20px;
+}
+
+
+.review-title {
+
+    font-size: 13px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    color: #777;
+
+    margin-bottom: 12px;
+}
+
+
+.review-items {
+
+    line-height: 2;
+
+    font-size: 15px;
+}
+
+
+.review-items span {
+
+    display: inline-block;
+
+    margin-right: 8px;
+
+    margin-bottom: 5px;
+
+    padding: 2px 7px;
+
+    border-radius: 5px;
+}
+
+
+.review-correct {
+
+    background: #e8f7ef;
+
+    color: #14794a;
+}
+
+
+.review-wrong {
+
+    background: #fdeaea;
+
+    color: #b72f2f;
+}
+
+
+.review-missed {
+
+    background: #eee;
+
+    color: #666;
+}
+
+
+/* =========================================
+   SOCIAL SHARE AREA
+========================================= */
+
+.share-box {
+
+    border-top: 1px solid #eee;
+
+    padding-top: 25px;
+
+    margin-top: 10px;
+
+    margin-bottom: 30px;
+}
+
+
+.share-title {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+
+.share-description {
+
+    color: #777;
+
+    font-size: 12px;
+
+    margin-bottom: 15px;
+}
+
+
+.share-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+
+.share-btn {
+
+    background: #111;
+
+    color: white;
+
+    padding: 12px 20px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.share-btn:hover {
+
+    background: #333;
+}
+
+
+.copy-btn {
+
+    background: white;
+
+    color: #111;
+
+    border: 1px solid #ccc;
+
+    padding: 12px 20px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.copy-btn:hover {
+
+    background: #f5f5f5;
+}
+
+
+/* =========================================
+   SMALL INVITATION LINK
+========================================= */
+
+.invite {
+
+    margin-top: 18px;
+
+    font-size: 12px;
+
+    color: #888;
+
+    line-height: 1.6;
+}
+
+
+.invite a {
+
+    color: #111;
+
+    font-weight: bold;
+
+    text-decoration: underline;
+
+    text-underline-offset: 3px;
+}
+
+
+.invite a:hover {
+
+    color: #19a463;
+}
+
+
+/* =========================================
+   SHARE MESSAGE PREVIEW
+========================================= */
+
+.share-preview {
+
+    display: none;
+
+    margin-top: 15px;
+
+    background: #fafafa;
+
+    border: 1px solid #eee;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    color: #555;
+
+    line-height: 1.5;
+}
+
+
+.share-preview.visible {
+
+    display: block;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+
+    border-top: 1px solid #eee;
+
+    padding: 15px 25px;
+
+    text-align: center;
+
+    color: #aaa;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   HIDDEN
+========================================= */
+
+.hidden {
+
+    display: none !important;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    body {
+
+        padding: 0;
+
+        align-items: stretch;
+    }
+
+
+    .app {
+
+        border: none;
+
+        border-radius: 0;
+
+        min-height: 100vh;
+    }
+
+
+    header {
+
+        padding: 20px;
+    }
+
+
+    main {
+
+        padding: 30px 18px;
+    }
+
+
+    .memory-area {
+
+        min-height: 230px;
+
+        padding: 20px;
+    }
+
+
+    .sequence {
+
+        word-spacing: 7px;
+    }
+
+
+    .stats {
+
+        gap: 7px;
+    }
+
+
+    .stat {
+
+        padding: 15px 5px;
+    }
+
+
+    .stat-number {
+
+        font-size: 23px;
+    }
+
+
+    .share-buttons {
+
+        flex-direction: column;
+    }
+
+
+    .share-btn,
+    .copy-btn {
+
+        width: 100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- ======================================
+     HEADER
+======================================= -->
+
+<header>
+
+    <div class="logo">
+
+        Mind<span>Flash</span>
+
+    </div>
+
+
+    <div class="best-score">
+
+        Best:
+        <strong id="bestScore">
+            0%
+        </strong>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+<!-- ======================================
+     START SCREEN
+======================================= -->
+
+<section
+    id="startScreen"
+    class="screen start-screen"
+>
+
+
+    <h1>
+
+        How much can<br>
+        you remember?
+
+    </h1>
+
+
+    <p>
+
+        Memorize the items before they disappear.
+        Then type everything you remember.
+
+        <br>
+
+        <strong>
+            Order does not matter.
+        </strong>
+
+    </p>
+
+
+    <div class="rules">
+
+
+        <div class="rule">
+
+            <strong>
+                20 sec
+            </strong>
+
+            <br>
+
+            Memorize
+
+        </div>
+
+
+        <div class="rule">
+
+            <strong>
+                60 sec
+            </strong>
+
+            <br>
+
+            Recall
+
+        </div>
+
+
+        <div class="rule">
+
+            <strong>
+                10 items
+            </strong>
+
+            <br>
+
+            Per round
+
+        </div>
+
+
+    </div>
+
+
+    <button
+        class="play-btn"
+        onclick="startGame()"
+    >
+
+        PLAY
+
+    </button>
+
+
+</section>
+
+
+
+<!-- ======================================
+     MEMORY SCREEN
+======================================= -->
+
+<section
+    id="memoryScreen"
+    class="screen hidden"
+>
+
+
+    <div class="game-top">
+
+        <span>
+            MEMORIZE
+        </span>
+
+
+        <span
+            class="timer"
+            id="memoryTimer"
+        >
+
+            20
+
+        </span>
+
+    </div>
+
+
+    <div class="progress">
+
+        <div
+            class="progress-bar"
+            id="memoryProgress"
+        ></div>
+
+    </div>
+
+
+    <div class="memory-area">
+
+        <div
+            class="sequence"
+            id="sequence"
+        ></div>
+
+    </div>
+
+
+    <p
+        style="
+            color:#777;
+            font-size:13px;
+        "
+    >
+
+        Memorize as many items as you can.
+
+        <br>
+
+        The order does not matter.
+
+    </p>
+
+
+</section>
+
+
+
+<!-- ======================================
+     ANSWER SCREEN
+======================================= -->
+
+<section
+    id="answerScreen"
+    class="screen answer-screen hidden"
+>
+
+
+    <div class="game-top">
+
+        <span>
+            RECALL
+        </span>
+
+
+        <span
+            class="timer"
+            id="answerTimer"
+        >
+
+            60
+
+        </span>
+
+    </div>
+
+
+    <div class="progress">
+
+        <div
+            class="progress-bar"
+            id="answerProgress"
+        ></div>
+
+    </div>
+
+
+    <h2>
+
+        What do you remember?
+
+    </h2>
+
+
+    <p>
+
+        Type everything you remember.
+
+        <br>
+
+        <strong>
+            Order does not matter.
+        </strong>
+
+    </p>
+
+
+    <textarea
+        id="answerInput"
+        placeholder="Example: apple 47 river 82 mountain..."
+        autocomplete="off"
+        spellcheck="false"
+    ></textarea>
+
+
+    <br>
+
+
+    <button
+        class="submit-btn"
+        onclick="submitAnswer()"
+    >
+
+        SUBMIT
+
+    </button>
+
+
+</section>
+
+
+
+<!-- ======================================
+     RESULT SCREEN
+======================================= -->
+
+<section
+    id="resultScreen"
+    class="screen answer-screen hidden"
+>
+
+
+    <div
+        class="score-number"
+        id="scoreNumber"
+    >
+
+        0%
+
+    </div>
+
+
+    <div class="score-label">
+
+        MEMORY SCORE
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <div
+                class="stat-number correct"
+                id="correctCount"
+            >
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                Correct
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat">
+
+            <div
+                class="stat-number wrong"
+                id="wrongCount"
+            >
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                Wrong
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat">
+
+            <div
+                class="stat-number missed"
+                id="missedCount"
+            >
+
+                0
+
+            </div>
+
+
+            <div class="stat-label">
+
+                Missed
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- REVIEW -->
+
+    <div class="review">
+
+
+        <div class="review-title">
+
+            Results
+
+        </div>
+
+
+        <div
+            id="reviewItems"
+            class="review-items"
+        ></div>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         SOCIAL SHARE
+    ================================== -->
+
+    <div class="share-box">
+
+
+        <div class="share-title">
+
+            Challenge your friends
+
+        </div>
+
+
+        <div class="share-description">
+
+            Share your score and see who has the better memory.
+
+        </div>
+
+
+        <div class="share-buttons">
+
+
+            <button
+                class="share-btn"
+                onclick="shareResult()"
+            >
+
+                SHARE RESULT
+
+            </button>
+
+
+            <button
+                class="copy-btn"
+                onclick="copyResult()"
+            >
+
+                COPY FOR SOCIAL MEDIA
+
+            </button>
+
+
+        </div>
+
+
+        <!-- Generated share message -->
+
+        <div
+            id="sharePreview"
+            class="share-preview"
+        ></div>
+
+
+        <!-- Small invitation -->
+
+        <div class="invite">
+
+            Think you can beat this?
+
+            <br>
+
+            <a
+                href=""
+                id="websiteLink"
+                target="_blank"
+                rel="noopener"
+            >
+
+                Check your MindFlash →
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- PLAY AGAIN -->
+
+    <button
+        class="play-btn"
+        onclick="startGame()"
+    >
+
+        PLAY AGAIN
+
+    </button>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- ======================================
+     FOOTER
+======================================= -->
+
+<footer>
+
+    MindFlash — Train your memory.
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ==========================================
+   WORD POOL
+========================================== */
+
+const words = [
+
+    "apple",
+    "river",
+    "mountain",
+    "window",
+    "coffee",
+    "ocean",
+    "forest",
+    "planet",
+    "silver",
+    "garden",
+    "rocket",
+    "bridge",
+    "thunder",
+    "orange",
+    "castle",
+    "pencil",
+    "mirror",
+    "summer",
+    "winter",
+    "shadow",
+    "camera",
+    "island",
+    "yellow",
+    "dragon",
+    "school",
+    "engine",
+    "cloud",
+    "flower",
+    "desert",
+    "tiger",
+    "village",
+    "sunset",
+    "bottle",
+    "chair",
+    "market",
+    "guitar"
+
+];
+
+
+/* ==========================================
+   NUMBER POOL
+========================================== */
+
+const numbers = [
+
+    "17",
+    "42",
+    "83",
+    "26",
+    "91",
+    "54",
+    "38",
+    "72",
+    "15",
+    "64",
+    "29",
+    "86",
+    "31",
+    "57",
+    "93",
+    "48",
+    "76",
+    "12",
+    "65",
+    "39",
+    "81",
+    "24",
+    "53",
+    "97",
+    "46",
+    "68",
+    "21",
+    "74",
+    "35",
+    "89"
+
+];
+
+
+/* ==========================================
+   GAME SETTINGS
+========================================== */
+
+const MEMORY_TIME = 20;
+
+const ANSWER_TIME = 60;
+
+const ITEMS_PER_ROUND = 10;
+
+
+/* ==========================================
+   GAME VARIABLES
+========================================== */
+
+let sequence = [];
+
+let memoryInterval;
+
+let answerInterval;
+
+let memoryRemaining;
+
+let answerRemaining;
+
+let currentScore = 0;
+
+
+/* ==========================================
+   BEST SCORE
+========================================== */
+
+let bestScore =
+    Number(
+        localStorage.getItem(
+            "mindFlashBest"
+        )
+    ) || 0;
+
+
+document.getElementById("bestScore")
+    .textContent =
+    bestScore + "%";
+
+
+/* ==========================================
+   WEBSITE URL
+========================================== */
+
+/*
+    IMPORTANT:
+
+    We don't hard-code a domain here.
+
+    Once this HTML file is uploaded to your
+    website, window.location.href becomes
+    the actual website address.
+
+    Example:
+
+    https://mindflash.com/
+
+    The social share message will automatically
+    contain that address.
+*/
+
+const WEBSITE_URL =
+    window.location.href;
+
+
+document.getElementById("websiteLink")
+    .href =
+    WEBSITE_URL;
+
+
+/* ==========================================
+   START GAME
+========================================== */
+
+function startGame() {
+
+    clearInterval(memoryInterval);
+
+    clearInterval(answerInterval);
+
+
+    sequence =
+        generateSequence();
+
+
+    showScreen(
+        "memoryScreen"
+    );
+
+
+    document.getElementById("sequence")
+        .textContent =
+        sequence.join("   ");
+
+
+    memoryRemaining =
+        MEMORY_TIME;
+
+
+    updateMemoryTimer();
+
+
+    memoryInterval =
+        setInterval(() => {
+
+
+            memoryRemaining--;
+
+
+            updateMemoryTimer();
+
+
+            if (
+                memoryRemaining <= 0
+            ) {
+
+                clearInterval(
+                    memoryInterval
+                );
+
+
+                beginRecall();
+
+            }
+
+
+        }, 1000);
+
+}
+
+
+/* ==========================================
+   GENERATE SEQUENCE
+========================================== */
+
+function generateSequence() {
+
+    let result = [];
+
+
+    for (
+        let i = 0;
+        i < ITEMS_PER_ROUND;
+        i++
+    ) {
+
+
+        /*
+            65% words
+            35% numbers
+        */
+
+        if (
+            Math.random() < 0.65
+        ) {
+
+
+            const randomWord =
+                words[
+                    Math.floor(
+                        Math.random()
+                        * words.length
+                    )
+                ];
+
+
+            result.push(
+                randomWord
+            );
+
+        }
+
+        else {
+
+
+            const randomNumber =
+                numbers[
+                    Math.floor(
+                        Math.random()
+                        * numbers.length
+                    )
+                ];
+
+
+            result.push(
+                randomNumber
+            );
+
+        }
+
+    }
+
+
+    return result;
+
+}
+
+
+/* ==========================================
+   MEMORY TIMER
+========================================== */
+
+function updateMemoryTimer() {
+
+    document.getElementById(
+        "memoryTimer"
+    )
+        .textContent =
+        memoryRemaining;
+
+
+    const percentage =
+        (
+            memoryRemaining /
+            MEMORY_TIME
+        ) * 100;
+
+
+    document.getElementById(
+        "memoryProgress"
+    )
+        .style.width =
+        percentage + "%";
+
+}
+
+
+/* ==========================================
+   BEGIN RECALL
+========================================== */
+
+function beginRecall() {
+
+
+    showScreen(
+        "answerScreen"
+    );
+
+
+    document.getElementById(
+        "sequence"
+    )
+        .textContent = "";
+
+
+    document.getElementById(
+        "answerInput"
+    )
+        .value = "";
+
+
+    answerRemaining =
+        ANSWER_TIME;
+
+
+    updateAnswerTimer();
+
+
+    document.getElementById(
+        "answerInput"
+    )
+        .focus();
+
+
+    answerInterval =
+        setInterval(() => {
+
+
+            answerRemaining--;
+
+
+            updateAnswerTimer();
+
+
+            if (
+                answerRemaining <= 0
+            ) {
+
+                clearInterval(
+                    answerInterval
+                );
+
+
+                submitAnswer();
+
+            }
+
+
+        }, 1000);
+
+}
+
+
+/* ==========================================
+   ANSWER TIMER
+========================================== */
+
+function updateAnswerTimer() {
+
+    document.getElementById(
+        "answerTimer"
+    )
+        .textContent =
+        answerRemaining;
+
+
+    const percentage =
+        (
+            answerRemaining /
+            ANSWER_TIME
+        ) * 100;
+
+
+    document.getElementById(
+        "answerProgress"
+    )
+        .style.width =
+        percentage + "%";
+
+}
+
+
+/* ==========================================
+   SUBMIT ANSWER
+========================================== */
+
+function submitAnswer() {
+
+    clearInterval(
+        answerInterval
+    );
+
+
+    const input =
+        document.getElementById(
+            "answerInput"
+        )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+    const userItems =
+        input
+            .split(/[\s,]+/)
+            .filter(
+                item =>
+                    item.length > 0
+            );
+
+
+    calculateScore(
+        userItems
+    );
+
+}
+
+
+/* ==========================================
+   CALCULATE SCORE
+========================================== */
+
+function calculateScore(
+    userItems
+) {
+
+
+    let correct = 0;
+
+    let wrong = 0;
+
+
+    /*
+        Copy original sequence.
+
+        Items are removed as they are
+        correctly matched.
+
+        This means duplicates are handled
+        correctly.
+    */
+
+    let remainingSequence =
+        sequence.map(
+            item =>
+                item.toLowerCase()
+        );
+
+
+    /*
+        ORDER DOES NOT MATTER.
+    */
+
+    userItems.forEach(
+        userItem => {
+
+
+            const matchIndex =
+                remainingSequence.indexOf(
+                    userItem
+                );
+
+
+            if (
+                matchIndex !== -1
+            ) {
+
+
+                correct++;
+
+
+                remainingSequence.splice(
+                    matchIndex,
+                    1
+                );
+
+            }
+
+            else {
+
+                wrong++;
+
+            }
+
+        }
+    );
+
+
+    const missed =
+        remainingSequence.length;
+
+
+    /*
+        Calculate percentage.
+    */
+
+    const score =
+        Math.round(
+            (
+                correct /
+                sequence.length
+            ) * 100
+        );
+
+
+    currentScore =
+        score;
+
+
+    /*
+        Update best score.
+    */
+
+    if (
+        score > bestScore
+    ) {
+
+
+        bestScore =
+            score;
+
+
+        localStorage.setItem(
+            "mindFlashBest",
+            bestScore
+        );
+
+
+        document.getElementById(
+            "bestScore"
+        )
+            .textContent =
+            bestScore + "%";
+
+    }
+
+
+    showResults(
+        score,
+        correct,
+        wrong,
+        missed,
+        userItems
+    );
+
+}
+
+
+/* ==========================================
+   SHOW RESULTS
+========================================== */
+
+function showResults(
+    score,
+    correct,
+    wrong,
+    missed,
+    userItems
+) {
+
+
+    document.getElementById(
+        "scoreNumber"
+    )
+        .textContent =
+        score + "%";
+
+
+    document.getElementById(
+        "correctCount"
+    )
+        .textContent =
+        correct;
+
+
+    document.getElementById(
+        "wrongCount"
+    )
+        .textContent =
+        wrong;
+
+
+    document.getElementById(
+        "missedCount"
+    )
+        .textContent =
+        missed;
+
+
+    const review =
+        document.getElementById(
+            "reviewItems"
+        );
+
+
+    review.innerHTML = "";
+
+
+    /*
+        Copy sequence for review.
+    */
+
+    let remaining =
+        sequence.map(
+            item =>
+                item.toLowerCase()
+        );
+
+
+    /*
+        Show player's answers.
+
+        Green = correct
+        Red = wrong
+    */
+
+    userItems.forEach(
+        userItem => {
+
+
+            const span =
+                document.createElement(
+                    "span"
+                );
+
+
+            span.textContent =
+                userItem;
+
+
+            const matchIndex =
+                remaining.indexOf(
+                    userItem
+                );
+
+
+            if (
+                matchIndex !== -1
+            ) {
+
+
+                span.className =
+                    "review-correct";
+
+
+                remaining.splice(
+                    matchIndex,
+                    1
+                );
+
+            }
+
+            else {
+
+
+                span.className =
+                    "review-wrong";
+
+            }
+
+
+            review.appendChild(
+                span
+            );
+
+        }
+    );
+
+
+    /*
+        Show missed items.
+    */
+
+    remaining.forEach(
+        item => {
+
+
+            const span =
+                document.createElement(
+                    "span"
+                );
+
+
+            span.textContent =
+                item;
+
+
+            span.className =
+                "review-missed";
+
+
+            review.appendChild(
+                span
+            );
+
+        }
+    );
+
+
+    /*
+        Reset share preview.
+    */
+
+    document.getElementById(
+        "sharePreview"
+    )
+        .classList.remove(
+            "visible"
+        );
+
+
+    showScreen(
+        "resultScreen"
+    );
+
+}
+
+
+/* ==========================================
+   CREATE SOCIAL SHARE MESSAGE
+========================================== */
+
+function getShareMessage() {
+
+
+    return `🧠 I scored ${currentScore}% on MindFlash!
+
+How much can you remember?
+
+👉 Check your MindFlash:
+${WEBSITE_URL}`;
+
+}
+
+
+/* ==========================================
+   SHARE RESULT
+========================================== */
+
+async function shareResult() {
+
+
+    const message =
+        getShareMessage();
+
+
+    /*
+        Use the device's native
+        sharing system when available.
+
+        On mobile this can open:
+
+        WhatsApp
+        Facebook
+        Messages
+        Instagram
+        etc.
+
+        depending on the device.
+    */
+
+    if (
+        navigator.share
+    ) {
+
+
+        try {
+
+
+            await navigator.share({
+
+                title:
+                    "My MindFlash Score",
+
+                text:
+                    message,
+
+                url:
+                    WEBSITE_URL
+
+            });
+
+
+        }
+
+        catch (error) {
+
+            /*
+                User cancelled sharing.
+                Nothing needs to happen.
+            */
+
+        }
+
+
+    }
+
+    else {
+
+
+        /*
+            If native sharing isn't available,
+            copy the message instead.
+        */
+
+        copyText(
+            message
+        );
+
+        showSharePreview(
+            message
+        );
+
+        alert(
+            "Your result has been copied. You can paste it into Facebook, WhatsApp or another social platform."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   COPY RESULT
+========================================== */
+
+function copyResult() {
+
+
+    const message =
+        getShareMessage();
+
+
+    copyText(
+        message
+    );
+
+
+    showSharePreview(
+        message
+    );
+
+
+    /*
+        Change button text temporarily.
+    */
+
+    const button =
+        document.querySelector(
+            ".copy-btn"
+        );
+
+
+    const originalText =
+        button.textContent;
+
+
+    button.textContent =
+        "COPIED ✓";
+
+
+    setTimeout(() => {
+
+        button.textContent =
+            originalText;
+
+    }, 2000);
+
+}
+
+
+/* ==========================================
+   COPY TEXT
+========================================== */
+
+function copyText(
+    text
+) {
+
+
+    /*
+        Modern clipboard API.
+    */
+
+    if (
+        navigator.clipboard &&
+        window.isSecureContext
+    ) {
+
+
+        navigator.clipboard.writeText(
+            text
+        );
+
+
+    }
+
+    else {
+
+
+        /*
+            Fallback for local files
+            and older browsers.
+        */
+
+        const textarea =
+            document.createElement(
+                "textarea"
+            );
+
+
+        textarea.value =
+            text;
+
+
+        textarea.style.position =
+            "fixed";
+
+
+        textarea.style.left =
+            "-9999px";
+
+
+        document.body.appendChild(
+            textarea
+        );
+
+
+        textarea.select();
+
+
+        document.execCommand(
+            "copy"
+        );
+
+
+        document.body.removeChild(
+            textarea
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   SHOW SHARE PREVIEW
+========================================== */
+
+function showSharePreview(
+    message
+) {
+
+
+    const preview =
+        document.getElementById(
+            "sharePreview"
+        );
+
+
+    /*
+        Convert new lines into
+        visible HTML line breaks.
+    */
+
+    preview.innerHTML =
+        message
+            .replace(
+                /\n/g,
+                "<br>"
+            );
+
+
+    preview.classList.add(
+        "visible"
+    );
+
+}
+
+
+/* ==========================================
+   SCREEN MANAGEMENT
+========================================== */
+
+function showScreen(
+    screenId
+) {
+
+
+    const screens = [
+
+        "startScreen",
+
+        "memoryScreen",
+
+        "answerScreen",
+
+        "resultScreen"
+
+    ];
+
+
+    screens.forEach(
+        id => {
+
+
+            document.getElementById(
+                id
+            )
+                .classList.add(
+                    "hidden"
+                );
+
+        }
+    );
+
+
+    document.getElementById(
+        screenId
+    )
+        .classList.remove(
+            "hidden"
+        );
+
+}
+
+</script>
+
+
+</body>
+</html>
+```
