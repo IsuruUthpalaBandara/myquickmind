@@ -1,2475 +1,1316 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MindFlash - Memory Challenge</title>
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>MindFlash</title>
-
-<meta
-    name="description"
-    content="Test your memory with MindFlash. Memorize, recall and challenge your friends."
+  name="description"
+  content="Test your memory with MindFlash. Memorize words and numbers, beat your score and challenge your friends."
 >
 
 <style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    background: #f5f5f5;
-
-    color: #111;
-
-    min-height: 100vh;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 20px;
-}
-
-
-.app {
-
-    width: 100%;
-
-    max-width: 850px;
-
-    min-height: 600px;
-
-    background: #fff;
-
-    border: 1px solid #ddd;
-
-    border-radius: 16px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    overflow: hidden;
-}
-
-
-/* =========================================
-   HEADER
-========================================= */
-
-header {
-
-    padding: 25px 30px;
-
-    border-bottom: 1px solid #eee;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-}
-
-
-.logo {
-
-    font-size: 22px;
-
-    font-weight: 800;
-
-    letter-spacing: -0.5px;
-}
-
-
-.logo span {
-
-    color: #19a463;
-}
-
-
-.best-score {
-
-    font-size: 13px;
-
-    color: #777;
-}
-
-
-.best-score strong {
-
-    color: #111;
-
-    font-size: 15px;
-}
-
-
-/* =========================================
-   MAIN
-========================================= */
-
-main {
-
-    flex: 1;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 45px 25px;
-}
-
-
-.screen {
-
-    width: 100%;
-
-    max-width: 700px;
-
-    text-align: center;
-}
-
-
-/* =========================================
-   START SCREEN
-========================================= */
-
-.start-screen h1 {
-
-    font-size:
-        clamp(38px, 7vw, 64px);
-
-    letter-spacing: -3px;
-
-    margin-bottom: 15px;
-}
-
-
-.start-screen p {
-
-    color: #666;
-
-    font-size: 16px;
-
-    line-height: 1.6;
-
-    max-width: 500px;
-
-    margin:
-        0 auto 35px;
-}
-
-
-.rules {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 12px;
-
-    flex-wrap: wrap;
-
-    margin-bottom: 35px;
-}
-
-
-.rule {
-
-    border: 1px solid #ddd;
-
-    padding: 12px 18px;
-
-    border-radius: 8px;
-
-    font-size: 13px;
-
-    background: #fafafa;
-}
-
-
-/* =========================================
-   BUTTONS
-========================================= */
-
-button {
-
-    border: none;
-
-    cursor: pointer;
-
-    font-family: inherit;
-}
-
-
-.play-btn {
-
-    background: #111;
-
-    color: white;
-
-    padding: 17px 45px;
-
-    border-radius: 8px;
-
-    font-size: 15px;
-
-    font-weight: bold;
-
-    letter-spacing: 1px;
-
-    transition: 0.2s;
-}
-
-
-.play-btn:hover {
-
-    background: #333;
-
-    transform:
-        translateY(-1px);
-}
-
-
-.secondary-btn {
-
-    background: white;
-
-    color: #111;
-
-    border: 1px solid #ccc;
-
-    padding: 13px 25px;
-
-    border-radius: 8px;
-
-    font-size: 13px;
-
-    font-weight: bold;
-
-    transition: 0.2s;
-}
-
-
-.secondary-btn:hover {
-
-    background: #f5f5f5;
-}
-
-
-/* =========================================
-   GAME SCREEN
-========================================= */
-
-.game-top {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 20px;
-
-    font-size: 14px;
-
-    color: #777;
-}
-
-
-.timer {
-
-    font-size: 20px;
-
-    font-weight: bold;
-
-    color: #111;
-}
-
-
-.memory-area {
-
-    min-height: 250px;
-
-    border: 1px solid #ddd;
-
-    border-radius: 12px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 30px;
-
-    margin-bottom: 25px;
-
-    background: #fafafa;
-}
-
-
-.sequence {
-
-    font-size:
-        clamp(25px, 5vw, 43px);
-
-    line-height: 1.7;
-
-    font-weight: 700;
-
-    letter-spacing: 2px;
-
-    word-spacing: 12px;
-}
-
-
-/* =========================================
-   PROGRESS
-========================================= */
-
-.progress {
-
-    height: 5px;
-
-    background: #e5e5e5;
-
-    border-radius: 5px;
-
-    overflow: hidden;
-
-    margin-bottom: 25px;
-}
-
-
-.progress-bar {
-
-    height: 100%;
-
-    width: 100%;
-
-    background: #111;
-
-    transition:
-        width 0.1s linear;
-}
-
-
-/* =========================================
-   ANSWER SCREEN
-========================================= */
-
-.answer-screen h2 {
-
-    font-size: 34px;
-
-    margin-bottom: 10px;
-}
-
-
-.answer-screen p {
-
-    color: #777;
-
-    margin-bottom: 25px;
-}
-
-
-textarea {
-
-    width: 100%;
-
-    height: 170px;
-
-    resize: none;
-
-    border: 1px solid #ccc;
-
-    border-radius: 10px;
-
-    padding: 18px;
-
-    font-family: inherit;
-
-    font-size: 18px;
-
-    line-height: 1.6;
-
-    outline: none;
-
-    transition: border 0.2s;
-}
-
-
-textarea:focus {
-
-    border-color: #111;
-}
-
-
-.submit-btn {
-
-    margin-top: 15px;
-
-    background: #111;
-
-    color: white;
-
-    padding: 15px 35px;
-
-    border-radius: 8px;
-
-    font-weight: bold;
-}
-
-
-.submit-btn:hover {
-
-    background: #333;
-}
-
-
-/* =========================================
-   RESULT
-========================================= */
-
-.score-number {
-
-    font-size:
-        clamp(60px, 12vw, 100px);
-
-    font-weight: 800;
-
-    letter-spacing: -5px;
-
-    margin-bottom: 5px;
-}
-
-
-.score-label {
-
-    color: #777;
-
-    font-size: 14px;
-
-    margin-bottom: 35px;
-}
-
-
-.stats {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 12px;
-
-    margin-bottom: 30px;
-}
-
-
-.stat {
-
-    border: 1px solid #ddd;
-
-    border-radius: 10px;
-
-    padding: 20px 10px;
-}
-
-
-.stat-number {
-
-    font-size: 28px;
-
-    font-weight: bold;
-
-    margin-bottom: 5px;
-}
-
-
-.stat-label {
-
-    font-size: 12px;
-
-    color: #777;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-}
-
-
-.correct {
-
-    color: #19a463;
-}
-
-
-.wrong {
-
-    color: #d83b3b;
-}
-
-
-.missed {
-
-    color: #777;
-}
-
-
-/* =========================================
-   REVIEW
-========================================= */
-
-.review {
-
-    text-align: left;
-
-    margin-bottom: 30px;
-
-    border-top: 1px solid #eee;
-
-    padding-top: 20px;
-}
-
-
-.review-title {
-
-    font-size: 13px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-
-    color: #777;
-
-    margin-bottom: 12px;
-}
-
-
-.review-items {
-
-    line-height: 2;
-
-    font-size: 15px;
-}
-
-
-.review-items span {
-
-    display: inline-block;
-
-    margin-right: 8px;
-
-    margin-bottom: 5px;
-
-    padding: 2px 7px;
-
-    border-radius: 5px;
-}
-
-
-.review-correct {
-
-    background: #e8f7ef;
-
-    color: #14794a;
-}
-
-
-.review-wrong {
-
-    background: #fdeaea;
-
-    color: #b72f2f;
-}
-
-
-.review-missed {
-
-    background: #eee;
-
-    color: #666;
-}
-
-
-/* =========================================
-   SOCIAL SHARE AREA
-========================================= */
-
-.share-box {
-
-    border-top: 1px solid #eee;
-
-    padding-top: 25px;
-
-    margin-top: 10px;
-
-    margin-bottom: 30px;
-}
-
-
-.share-title {
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    margin-bottom: 7px;
-}
-
-
-.share-description {
-
-    color: #777;
-
-    font-size: 12px;
-
-    margin-bottom: 15px;
-}
-
-
-.share-buttons {
-
-    display: flex;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    flex-wrap: wrap;
-}
-
-
-.share-btn {
-
-    background: #111;
-
-    color: white;
-
-    padding: 12px 20px;
-
-    border-radius: 7px;
-
-    font-size: 12px;
-
-    font-weight: bold;
-}
-
-
-.share-btn:hover {
-
-    background: #333;
-}
-
-
-.copy-btn {
-
-    background: white;
-
-    color: #111;
-
-    border: 1px solid #ccc;
-
-    padding: 12px 20px;
-
-    border-radius: 7px;
-
-    font-size: 12px;
-
-    font-weight: bold;
-}
-
-
-.copy-btn:hover {
-
-    background: #f5f5f5;
-}
-
-
-/* =========================================
-   SMALL INVITATION LINK
-========================================= */
-
-.invite {
-
-    margin-top: 18px;
-
-    font-size: 12px;
-
-    color: #888;
-
-    line-height: 1.6;
-}
-
-
-.invite a {
-
-    color: #111;
-
-    font-weight: bold;
-
-    text-decoration: underline;
-
-    text-underline-offset: 3px;
-}
-
-
-.invite a:hover {
-
-    color: #19a463;
-}
-
-
-/* =========================================
-   SHARE MESSAGE PREVIEW
-========================================= */
-
-.share-preview {
-
-    display: none;
-
-    margin-top: 15px;
-
-    background: #fafafa;
-
-    border: 1px solid #eee;
-
-    border-radius: 8px;
-
-    padding: 12px;
-
-    text-align: left;
-
-    font-size: 12px;
-
-    color: #555;
-
-    line-height: 1.5;
-}
-
-
-.share-preview.visible {
-
-    display: block;
-}
-
-
-/* =========================================
-   FOOTER
-========================================= */
-
-footer {
-
-    border-top: 1px solid #eee;
-
-    padding: 15px 25px;
-
-    text-align: center;
-
-    color: #aaa;
-
-    font-size: 11px;
-}
-
-
-/* =========================================
-   HIDDEN
-========================================= */
-
-.hidden {
-
-    display: none !important;
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 600px) {
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
     body {
-
-        padding: 0;
-
-        align-items: stretch;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f3f3f3;
+        color: #111;
+        min-height: 100vh;
+        padding: 20px;
     }
-
 
     .app {
-
-        border: none;
-
-        border-radius: 0;
-
-        min-height: 100vh;
+        width: 100%;
+        max-width: 850px;
+        margin: auto;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 16px;
+        overflow: hidden;
     }
-
 
     header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid #eee;
+    }
 
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .logo span {
+        color: #22a06b;
+    }
+
+    .best-score {
+        font-size: 13px;
+        color: #777;
+    }
+
+    .best-score strong {
+        color: #111;
+    }
+
+    .screen {
+        display: none;
+        padding: 45px 30px;
+        text-align: center;
+    }
+
+    .screen.active {
+        display: block;
+    }
+
+    h1 {
+        font-size: 38px;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .subtitle {
+        color: #666;
+        max-width: 550px;
+        margin: 0 auto 30px;
+        line-height: 1.6;
+    }
+
+    .rules {
+        max-width: 500px;
+        margin: 0 auto 30px;
+        text-align: left;
+        background: #f7f7f7;
+        border-radius: 12px;
         padding: 20px;
     }
 
-
-    main {
-
-        padding: 30px 18px;
+    .rules p {
+        margin-bottom: 10px;
+        color: #444;
     }
 
-
-    .memory-area {
-
-        min-height: 230px;
-
-        padding: 20px;
+    .rules p:last-child {
+        margin-bottom: 0;
     }
 
-
-    .sequence {
-
-        word-spacing: 7px;
+    button {
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 14px 24px;
+        transition: 0.2s;
     }
 
+    .primary {
+        background: #111;
+        color: white;
+    }
+
+    .primary:hover {
+        background: #333;
+        transform: translateY(-1px);
+    }
+
+    .secondary {
+        background: #eee;
+        color: #111;
+    }
+
+    .secondary:hover {
+        background: #ddd;
+    }
+
+    .timer {
+        font-size: 52px;
+        font-weight: 800;
+        margin-bottom: 30px;
+    }
+
+    .timer.warning {
+        color: #d64545;
+    }
+
+    .memory-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .memory-item {
+        background: #111;
+        color: white;
+        border-radius: 10px;
+        padding: 15px 20px;
+        font-size: 20px;
+        font-weight: 700;
+        min-width: 80px;
+    }
+
+    textarea {
+        width: 100%;
+        max-width: 650px;
+        min-height: 180px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        padding: 18px;
+        font-family: inherit;
+        font-size: 16px;
+        resize: vertical;
+        outline: none;
+        margin-bottom: 15px;
+    }
+
+    textarea:focus {
+        border-color: #111;
+    }
+
+    .hint {
+        color: #777;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .result-score {
+        font-size: 80px;
+        font-weight: 900;
+        letter-spacing: -4px;
+        margin: 10px 0;
+    }
+
+    .result-comment {
+        font-size: 21px;
+        font-weight: 700;
+        margin: 10px auto 30px;
+        max-width: 650px;
+        line-height: 1.4;
+    }
+
+    .result-comment span {
+        display: block;
+        font-size: 14px;
+        font-weight: 400;
+        color: #777;
+        margin-top: 8px;
+    }
 
     .stats {
-
-        gap: 7px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        max-width: 600px;
+        margin: 0 auto 30px;
     }
-
 
     .stat {
-
-        padding: 15px 5px;
+        background: #f5f5f5;
+        padding: 18px 10px;
+        border-radius: 10px;
     }
 
-
-    .stat-number {
-
-        font-size: 23px;
+    .stat strong {
+        display: block;
+        font-size: 25px;
+        margin-bottom: 5px;
     }
 
+    .stat span {
+        color: #777;
+        font-size: 12px;
+    }
+
+    .review {
+        max-width: 650px;
+        margin: 0 auto 30px;
+        text-align: left;
+        background: #f7f7f7;
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .review h3 {
+        margin-bottom: 15px;
+    }
+
+    .review-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #e5e5e5;
+        font-size: 14px;
+    }
+
+    .review-item:last-child {
+        border-bottom: none;
+    }
+
+    .correct {
+        color: #168653;
+        font-weight: 700;
+    }
+
+    .wrong {
+        color: #d64545;
+        font-weight: 700;
+    }
+
+    .missed {
+        color: #888;
+        font-weight: 700;
+    }
+
+    .share-area {
+        max-width: 650px;
+        margin: 0 auto 25px;
+        border-top: 1px solid #eee;
+        padding-top: 25px;
+    }
+
+    .share-area h3 {
+        margin-bottom: 8px;
+    }
+
+    .share-area p {
+        color: #777;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
 
     .share-buttons {
-
-        flex-direction: column;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
-
-    .share-btn,
-    .copy-btn {
-
-        width: 100%;
+    .share-preview {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background: #f5f5f5;
+        border-radius: 10px;
+        text-align: left;
+        white-space: pre-line;
+        font-size: 13px;
+        line-height: 1.5;
     }
 
-}
+    .invite {
+        display: inline-block;
+        margin-top: 15px;
+        color: #111;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+    }
 
+    .invite:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 10px;
+        }
+
+        header {
+            padding: 16px;
+        }
+
+        .screen {
+            padding: 35px 18px;
+        }
+
+        h1 {
+            font-size: 31px;
+        }
+
+        h2 {
+            font-size: 25px;
+        }
+
+        .result-score {
+            font-size: 65px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr;
+        }
+
+        .memory-item {
+            font-size: 17px;
+            padding: 12px 15px;
+        }
+
+        .share-buttons button {
+            width: 100%;
+        }
+    }
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="app">
 
-
-<!-- ======================================
-     HEADER
-======================================= -->
-
-<header>
-
-    <div class="logo">
-
-        Mind<span>Flash</span>
-
-    </div>
-
-
-    <div class="best-score">
-
-        Best:
-        <strong id="bestScore">
-            0%
-        </strong>
-
-    </div>
-
-</header>
-
-
-
-<main>
-
-
-<!-- ======================================
-     START SCREEN
-======================================= -->
-
-<section
-    id="startScreen"
-    class="screen start-screen"
->
-
-
-    <h1>
-
-        How much can<br>
-        you remember?
-
-    </h1>
-
-
-    <p>
-
-        Memorize the items before they disappear.
-        Then type everything you remember.
-
-        <br>
-
-        <strong>
-            Order does not matter.
-        </strong>
-
-    </p>
-
-
-    <div class="rules">
-
-
-        <div class="rule">
-
-            <strong>
-                20 sec
-            </strong>
-
-            <br>
-
-            Memorize
-
+    <header>
+        <div class="logo">
+            Mind<span>Flash</span>
         </div>
 
+        <div class="best-score">
+            Best: <strong id="bestScore">0%</strong>
+        </div>
+    </header>
 
-        <div class="rule">
 
-            <strong>
-                60 sec
-            </strong>
+    <!-- START SCREEN -->
+    <section id="startScreen" class="screen active">
 
-            <br>
+        <h1>How good is your memory?</h1>
 
-            Recall
+        <p class="subtitle">
+            Memorize the words and numbers before they disappear.
+            Then see how much your brain actually remembered.
+        </p>
 
+        <div class="rules">
+            <p>🧠 <strong>10 items</strong> will appear.</p>
+            <p>⏱️ You get <strong>20 seconds</strong> to memorize them.</p>
+            <p>⌨️ You get <strong>60 seconds</strong> to enter your answers.</p>
+            <p>🔀 <strong>Order doesn't matter.</strong></p>
+            <p>🏆 Try to beat your best score.</p>
         </div>
 
+        <button class="primary" onclick="startGame()">
+            PLAY
+        </button>
 
-        <div class="rule">
-
-            <strong>
-                10 items
-            </strong>
-
-            <br>
-
-            Per round
-
-        </div>
+    </section>
 
 
-    </div>
+    <!-- MEMORY SCREEN -->
+    <section id="memoryScreen" class="screen">
 
-
-    <button
-        class="play-btn"
-        onclick="startGame()"
-    >
-
-        PLAY
-
-    </button>
-
-
-</section>
-
-
-
-<!-- ======================================
-     MEMORY SCREEN
-======================================= -->
-
-<section
-    id="memoryScreen"
-    class="screen hidden"
->
-
-
-    <div class="game-top">
-
-        <span>
-            MEMORIZE
-        </span>
-
-
-        <span
-            class="timer"
-            id="memoryTimer"
-        >
-
+        <div id="memoryTimer" class="timer">
             20
+        </div>
 
-        </span>
+        <h2>MEMORIZE!</h2>
 
-    </div>
+        <p class="subtitle">
+            Remember as many as possible.
+        </p>
 
+        <div id="memoryItems" class="memory-items"></div>
 
-    <div class="progress">
-
-        <div
-            class="progress-bar"
-            id="memoryProgress"
-        ></div>
-
-    </div>
+    </section>
 
 
-    <div class="memory-area">
+    <!-- ANSWER SCREEN -->
+    <section id="answerScreen" class="screen">
 
-        <div
-            class="sequence"
-            id="sequence"
-        ></div>
-
-    </div>
-
-
-    <p
-        style="
-            color:#777;
-            font-size:13px;
-        "
-    >
-
-        Memorize as many items as you can.
-
-        <br>
-
-        The order does not matter.
-
-    </p>
-
-
-</section>
-
-
-
-<!-- ======================================
-     ANSWER SCREEN
-======================================= -->
-
-<section
-    id="answerScreen"
-    class="screen answer-screen hidden"
->
-
-
-    <div class="game-top">
-
-        <span>
-            RECALL
-        </span>
-
-
-        <span
-            class="timer"
-            id="answerTimer"
-        >
-
+        <div id="answerTimer" class="timer">
             60
+        </div>
 
-        </span>
+        <h2>What do you remember?</h2>
 
-    </div>
+        <p class="subtitle">
+            Enter the items you remember. One item per line.
+            The order doesn't matter.
+        </p>
 
+        <textarea
+            id="answerInput"
+            placeholder="Example:
 
-    <div class="progress">
+apple
+42
+mountain
+17
+ocean"
+        ></textarea>
 
-        <div
-            class="progress-bar"
-            id="answerProgress"
-        ></div>
+        <p class="hint">
+            Don't worry about capitalization. Just remember as much as you can.
+        </p>
 
-    </div>
+        <button class="primary" onclick="submitAnswer()">
+            SUBMIT
+        </button>
 
-
-    <h2>
-
-        What do you remember?
-
-    </h2>
-
-
-    <p>
-
-        Type everything you remember.
-
-        <br>
-
-        <strong>
-            Order does not matter.
-        </strong>
-
-    </p>
+    </section>
 
 
-    <textarea
-        id="answerInput"
-        placeholder="Example: apple 47 river 82 mountain..."
-        autocomplete="off"
-        spellcheck="false"
-    ></textarea>
+    <!-- RESULT SCREEN -->
+    <section id="resultScreen" class="screen">
+
+        <h2>Your MindFlash Score</h2>
+
+        <div id="resultScore" class="result-score">
+            0%
+        </div>
+
+        <div id="resultComment" class="result-comment"></div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong id="correctCount">0</strong>
+                <span>CORRECT</span>
+            </div>
+
+            <div class="stat">
+                <strong id="wrongCount">0</strong>
+                <span>WRONG</span>
+            </div>
+
+            <div class="stat">
+                <strong id="missedCount">0</strong>
+                <span>MISSED</span>
+            </div>
+
+        </div>
 
 
-    <br>
+        <div class="review">
+
+            <h3>Answer Review</h3>
+
+            <div id="reviewList"></div>
+
+        </div>
 
 
-    <button
-        class="submit-btn"
-        onclick="submitAnswer()"
-    >
+        <!-- SHARE -->
+        <div class="share-area">
 
-        SUBMIT
+            <h3>Challenge your friends</h3>
 
-    </button>
+            <p>
+                Show them your score and see if they can beat you.
+            </p>
 
+            <div class="share-buttons">
 
-</section>
+                <button
+                    class="primary"
+                    onclick="shareResult()"
+                >
+                    SHARE RESULT
+                </button>
 
+                <button
+                    class="secondary"
+                    onclick="copyResult()"
+                >
+                    COPY FOR SOCIAL MEDIA
+                </button>
 
-
-<!-- ======================================
-     RESULT SCREEN
-======================================= -->
-
-<section
-    id="resultScreen"
-    class="screen answer-screen hidden"
->
-
-
-    <div
-        class="score-number"
-        id="scoreNumber"
-    >
-
-        0%
-
-    </div>
-
-
-    <div class="score-label">
-
-        MEMORY SCORE
-
-    </div>
-
-
-    <!-- STATISTICS -->
-
-    <div class="stats">
-
-
-        <div class="stat">
+            </div>
 
             <div
-                class="stat-number correct"
-                id="correctCount"
-            >
-
-                0
-
-            </div>
-
-
-            <div class="stat-label">
-
-                Correct
-
-            </div>
-
-        </div>
-
-
-
-        <div class="stat">
-
-            <div
-                class="stat-number wrong"
-                id="wrongCount"
-            >
-
-                0
-
-            </div>
-
-
-            <div class="stat-label">
-
-                Wrong
-
-            </div>
-
-        </div>
-
-
-
-        <div class="stat">
-
-            <div
-                class="stat-number missed"
-                id="missedCount"
-            >
-
-                0
-
-            </div>
-
-
-            <div class="stat-label">
-
-                Missed
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- REVIEW -->
-
-    <div class="review">
-
-
-        <div class="review-title">
-
-            Results
-
-        </div>
-
-
-        <div
-            id="reviewItems"
-            class="review-items"
-        ></div>
-
-
-    </div>
-
-
-
-    <!-- =================================
-         SOCIAL SHARE
-    ================================== -->
-
-    <div class="share-box">
-
-
-        <div class="share-title">
-
-            Challenge your friends
-
-        </div>
-
-
-        <div class="share-description">
-
-            Share your score and see who has the better memory.
-
-        </div>
-
-
-        <div class="share-buttons">
-
-
-            <button
-                class="share-btn"
-                onclick="shareResult()"
-            >
-
-                SHARE RESULT
-
-            </button>
-
-
-            <button
-                class="copy-btn"
-                onclick="copyResult()"
-            >
-
-                COPY FOR SOCIAL MEDIA
-
-            </button>
-
-
-        </div>
-
-
-        <!-- Generated share message -->
-
-        <div
-            id="sharePreview"
-            class="share-preview"
-        ></div>
-
-
-        <!-- Small invitation -->
-
-        <div class="invite">
-
-            Think you can beat this?
-
-            <br>
+                id="sharePreview"
+                class="share-preview"
+            ></div>
 
             <a
-                href=""
-                id="websiteLink"
-                target="_blank"
-                rel="noopener"
+                href="#"
+                id="inviteLink"
+                class="invite"
             >
-
                 Check your MindFlash →
-
             </a>
 
         </div>
 
 
-    </div>
+        <button
+            class="secondary"
+            onclick="startGame()"
+        >
+            PLAY AGAIN
+        </button>
 
-
-
-    <!-- PLAY AGAIN -->
-
-    <button
-        class="play-btn"
-        onclick="startGame()"
-    >
-
-        PLAY AGAIN
-
-    </button>
-
-
-</section>
-
-
-</main>
-
-
-
-<!-- ======================================
-     FOOTER
-======================================= -->
-
-<footer>
-
-    MindFlash — Train your memory.
-
-</footer>
-
+    </section>
 
 </div>
 
 
-
 <script>
 
+    /* =========================
+       GAME SETTINGS
+    ========================= */
 
-/* ==========================================
-   WORD POOL
-========================================== */
-
-const words = [
-
-    "apple",
-    "river",
-    "mountain",
-    "window",
-    "coffee",
-    "ocean",
-    "forest",
-    "planet",
-    "silver",
-    "garden",
-    "rocket",
-    "bridge",
-    "thunder",
-    "orange",
-    "castle",
-    "pencil",
-    "mirror",
-    "summer",
-    "winter",
-    "shadow",
-    "camera",
-    "island",
-    "yellow",
-    "dragon",
-    "school",
-    "engine",
-    "cloud",
-    "flower",
-    "desert",
-    "tiger",
-    "village",
-    "sunset",
-    "bottle",
-    "chair",
-    "market",
-    "guitar"
-
-];
+    const MEMORY_TIME = 20;
+    const ANSWER_TIME = 60;
+    const ITEMS_PER_ROUND = 10;
 
 
-/* ==========================================
-   NUMBER POOL
-========================================== */
+    /* =========================
+       WORD / NUMBER POOLS
+    ========================= */
 
-const numbers = [
+    const words = [
+        "apple",
+        "ocean",
+        "mountain",
+        "river",
+        "forest",
+        "planet",
+        "rocket",
+        "castle",
+        "coffee",
+        "window",
+        "garden",
+        "thunder",
+        "mirror",
+        "dragon",
+        "bridge",
+        "sunset",
+        "shadow",
+        "pencil",
+        "camera",
+        "island",
+        "orange",
+        "winter",
+        "summer",
+        "cloud",
+        "diamond",
+        "tiger",
+        "eagle",
+        "storm",
+        "flower",
+        "book",
+        "train",
+        "desert",
+        "moon",
+        "star",
+        "forest",
+        "ocean"
+    ];
 
-    "17",
-    "42",
-    "83",
-    "26",
-    "91",
-    "54",
-    "38",
-    "72",
-    "15",
-    "64",
-    "29",
-    "86",
-    "31",
-    "57",
-    "93",
-    "48",
-    "76",
-    "12",
-    "65",
-    "39",
-    "81",
-    "24",
-    "53",
-    "97",
-    "46",
-    "68",
-    "21",
-    "74",
-    "35",
-    "89"
-
-];
-
-
-/* ==========================================
-   GAME SETTINGS
-========================================== */
-
-const MEMORY_TIME = 20;
-
-const ANSWER_TIME = 60;
-
-const ITEMS_PER_ROUND = 10;
-
-
-/* ==========================================
-   GAME VARIABLES
-========================================== */
-
-let sequence = [];
-
-let memoryInterval;
-
-let answerInterval;
-
-let memoryRemaining;
-
-let answerRemaining;
-
-let currentScore = 0;
-
-
-/* ==========================================
-   BEST SCORE
-========================================== */
-
-let bestScore =
-    Number(
-        localStorage.getItem(
-            "mindFlashBest"
-        )
-    ) || 0;
+    const numbers = [
+        "12",
+        "17",
+        "23",
+        "29",
+        "31",
+        "36",
+        "42",
+        "47",
+        "51",
+        "58",
+        "63",
+        "67",
+        "71",
+        "76",
+        "82",
+        "88",
+        "91",
+        "94",
+        "15",
+        "26",
+        "34",
+        "39",
+        "44",
+        "53",
+        "61",
+        "69",
+        "74",
+        "79",
+        "86",
+        "97"
+    ];
 
 
-document.getElementById("bestScore")
-    .textContent =
-    bestScore + "%";
+    /* =========================
+       GAME VARIABLES
+    ========================= */
+
+    let sequence = [];
+
+    let memoryInterval;
+    let answerInterval;
+
+    let memoryTimeLeft = MEMORY_TIME;
+    let answerTimeLeft = ANSWER_TIME;
+
+    let currentScore = 0;
 
 
-/* ==========================================
-   WEBSITE URL
-========================================== */
+    /* =========================
+       LOAD BEST SCORE
+    ========================= */
 
-/*
-    IMPORTANT:
-
-    We don't hard-code a domain here.
-
-    Once this HTML file is uploaded to your
-    website, window.location.href becomes
-    the actual website address.
-
-    Example:
-
-    https://mindflash.com/
-
-    The social share message will automatically
-    contain that address.
-*/
-
-const WEBSITE_URL =
-    window.location.href;
-
-
-document.getElementById("websiteLink")
-    .href =
-    WEBSITE_URL;
-
-
-/* ==========================================
-   START GAME
-========================================== */
-
-function startGame() {
-
-    clearInterval(memoryInterval);
-
-    clearInterval(answerInterval);
-
-
-    sequence =
-        generateSequence();
-
-
-    showScreen(
-        "memoryScreen"
+    let bestScore = Number(
+        localStorage.getItem("mindflashBest") || 0
     );
 
-
-    document.getElementById("sequence")
-        .textContent =
-        sequence.join("   ");
+    document.getElementById("bestScore").textContent =
+        bestScore + "%";
 
 
-    memoryRemaining =
-        MEMORY_TIME;
+    /* =========================
+       START GAME
+    ========================= */
 
+    function startGame() {
 
-    updateMemoryTimer();
+        clearInterval(memoryInterval);
+        clearInterval(answerInterval);
 
+        sequence = generateSequence();
 
-    memoryInterval =
-        setInterval(() => {
+        memoryTimeLeft = MEMORY_TIME;
+        answerTimeLeft = ANSWER_TIME;
 
+        document.getElementById("answerInput").value = "";
 
-            memoryRemaining--;
+        displayMemoryItems();
 
+        document.getElementById("memoryTimer").textContent =
+            memoryTimeLeft;
 
-            updateMemoryTimer();
+        showScreen("memoryScreen");
 
-
-            if (
-                memoryRemaining <= 0
-            ) {
-
-                clearInterval(
-                    memoryInterval
-                );
-
-
-                beginRecall();
-
-            }
-
-
-        }, 1000);
-
-}
-
-
-/* ==========================================
-   GENERATE SEQUENCE
-========================================== */
-
-function generateSequence() {
-
-    let result = [];
-
-
-    for (
-        let i = 0;
-        i < ITEMS_PER_ROUND;
-        i++
-    ) {
-
-
-        /*
-            65% words
-            35% numbers
-        */
-
-        if (
-            Math.random() < 0.65
-        ) {
-
-
-            const randomWord =
-                words[
-                    Math.floor(
-                        Math.random()
-                        * words.length
-                    )
-                ];
-
-
-            result.push(
-                randomWord
-            );
-
-        }
-
-        else {
-
-
-            const randomNumber =
-                numbers[
-                    Math.floor(
-                        Math.random()
-                        * numbers.length
-                    )
-                ];
-
-
-            result.push(
-                randomNumber
-            );
-
-        }
-
+        memoryInterval = setInterval(updateMemoryTimer, 1000);
     }
 
 
-    return result;
+    /* =========================
+       GENERATE RANDOM SEQUENCE
+    ========================= */
 
-}
+    function generateSequence() {
 
+        let combined = [
+            ...words,
+            ...numbers
+        ];
 
-/* ==========================================
-   MEMORY TIMER
-========================================== */
+        combined = shuffle(combined);
 
-function updateMemoryTimer() {
+        return combined.slice(0, ITEMS_PER_ROUND);
+    }
 
-    document.getElementById(
-        "memoryTimer"
-    )
-        .textContent =
-        memoryRemaining;
 
+    /* =========================
+       DISPLAY MEMORY
+    ========================= */
 
-    const percentage =
-        (
-            memoryRemaining /
-            MEMORY_TIME
-        ) * 100;
+    function displayMemoryItems() {
 
+        const container =
+            document.getElementById("memoryItems");
 
-    document.getElementById(
-        "memoryProgress"
-    )
-        .style.width =
-        percentage + "%";
+        container.innerHTML = "";
 
-}
+        sequence.forEach(item => {
 
+            const div =
+                document.createElement("div");
 
-/* ==========================================
-   BEGIN RECALL
-========================================== */
+            div.className = "memory-item";
 
-function beginRecall() {
+            div.textContent = item;
 
+            container.appendChild(div);
 
-    showScreen(
-        "answerScreen"
-    );
+        });
+    }
 
 
-    document.getElementById(
-        "sequence"
-    )
-        .textContent = "";
+    /* =========================
+       MEMORY TIMER
+    ========================= */
 
+    function updateMemoryTimer() {
 
-    document.getElementById(
-        "answerInput"
-    )
-        .value = "";
+        memoryTimeLeft--;
 
+        document.getElementById("memoryTimer").textContent =
+            memoryTimeLeft;
 
-    answerRemaining =
-        ANSWER_TIME;
+        if (memoryTimeLeft <= 5) {
 
+            document
+                .getElementById("memoryTimer")
+                .classList.add("warning");
 
-    updateAnswerTimer();
+        }
 
+        if (memoryTimeLeft <= 0) {
 
-    document.getElementById(
-        "answerInput"
-    )
-        .focus();
+            clearInterval(memoryInterval);
 
+            document
+                .getElementById("memoryTimer")
+                .classList.remove("warning");
 
-    answerInterval =
-        setInterval(() => {
+            beginRecall();
+        }
+    }
 
 
-            answerRemaining--;
+    /* =========================
+       BEGIN RECALL
+    ========================= */
 
+    function beginRecall() {
 
-            updateAnswerTimer();
+        answerTimeLeft = ANSWER_TIME;
 
+        document.getElementById("answerTimer").textContent =
+            answerTimeLeft;
 
-            if (
-                answerRemaining <= 0
-            ) {
+        document
+            .getElementById("answerTimer")
+            .classList.remove("warning");
 
-                clearInterval(
-                    answerInterval
-                );
+        showScreen("answerScreen");
 
+        document.getElementById("answerInput").focus();
 
-                submitAnswer();
+        answerInterval =
+            setInterval(updateAnswerTimer, 1000);
+    }
 
-            }
 
+    /* =========================
+       ANSWER TIMER
+    ========================= */
 
-        }, 1000);
+    function updateAnswerTimer() {
 
-}
+        answerTimeLeft--;
 
+        document.getElementById("answerTimer").textContent =
+            answerTimeLeft;
 
-/* ==========================================
-   ANSWER TIMER
-========================================== */
+        if (answerTimeLeft <= 10) {
 
-function updateAnswerTimer() {
+            document
+                .getElementById("answerTimer")
+                .classList.add("warning");
 
-    document.getElementById(
-        "answerTimer"
-    )
-        .textContent =
-        answerRemaining;
+        }
 
+        if (answerTimeLeft <= 0) {
 
-    const percentage =
-        (
-            answerRemaining /
-            ANSWER_TIME
-        ) * 100;
+            clearInterval(answerInterval);
 
+            submitAnswer();
+        }
+    }
 
-    document.getElementById(
-        "answerProgress"
-    )
-        .style.width =
-        percentage + "%";
 
-}
+    /* =========================
+       SUBMIT ANSWER
+    ========================= */
 
+    function submitAnswer() {
 
-/* ==========================================
-   SUBMIT ANSWER
-========================================== */
+        clearInterval(answerInterval);
 
-function submitAnswer() {
+        const raw =
+            document.getElementById("answerInput").value;
 
-    clearInterval(
-        answerInterval
-    );
+        const userAnswers = raw
+            .split(/\n|,/)
+            .map(item => item.trim().toLowerCase())
+            .filter(item => item !== "");
 
 
-    const input =
-        document.getElementById(
-            "answerInput"
-        )
-            .value
-            .trim()
-            .toLowerCase();
+        calculateScore(userAnswers);
+    }
 
 
-    const userItems =
-        input
-            .split(/[\s,]+/)
-            .filter(
-                item =>
-                    item.length > 0
-            );
+    /* =========================
+       CALCULATE SCORE
+       ORDER DOES NOT MATTER
+    ========================= */
 
+    function calculateScore(userAnswers) {
 
-    calculateScore(
-        userItems
-    );
+        let remainingSequence =
+            sequence.map(item => item.toLowerCase());
 
-}
+        let correct = 0;
+        let wrong = 0;
 
+        const answerResults = [];
 
-/* ==========================================
-   CALCULATE SCORE
-========================================== */
 
-function calculateScore(
-    userItems
-) {
+        userAnswers.forEach(answer => {
 
+            const index =
+                remainingSequence.indexOf(answer);
 
-    let correct = 0;
-
-    let wrong = 0;
-
-
-    /*
-        Copy original sequence.
-
-        Items are removed as they are
-        correctly matched.
-
-        This means duplicates are handled
-        correctly.
-    */
-
-    let remainingSequence =
-        sequence.map(
-            item =>
-                item.toLowerCase()
-        );
-
-
-    /*
-        ORDER DOES NOT MATTER.
-    */
-
-    userItems.forEach(
-        userItem => {
-
-
-            const matchIndex =
-                remainingSequence.indexOf(
-                    userItem
-                );
-
-
-            if (
-                matchIndex !== -1
-            ) {
-
+            if (index !== -1) {
 
                 correct++;
 
+                answerResults.push({
+                    text: answer,
+                    status: "correct"
+                });
 
-                remainingSequence.splice(
-                    matchIndex,
-                    1
-                );
+                remainingSequence.splice(index, 1);
 
-            }
-
-            else {
+            } else {
 
                 wrong++;
 
+                answerResults.push({
+                    text: answer,
+                    status: "wrong"
+                });
+
             }
 
-        }
-    );
+        });
 
 
-    const missed =
-        remainingSequence.length;
+        const missed =
+            remainingSequence.length;
 
 
-    /*
-        Calculate percentage.
-    */
+        currentScore =
+            Math.round(
+                (correct / sequence.length) * 100
+            );
 
-    const score =
-        Math.round(
-            (
-                correct /
-                sequence.length
-            ) * 100
+
+        showResults(
+            correct,
+            wrong,
+            missed,
+            answerResults,
+            remainingSequence
         );
-
-
-    currentScore =
-        score;
-
-
-    /*
-        Update best score.
-    */
-
-    if (
-        score > bestScore
-    ) {
-
-
-        bestScore =
-            score;
-
-
-        localStorage.setItem(
-            "mindFlashBest",
-            bestScore
-        );
-
-
-        document.getElementById(
-            "bestScore"
-        )
-            .textContent =
-            bestScore + "%";
-
     }
 
 
-    showResults(
-        score,
+    /* =========================
+       RESULT COMMENT
+    ========================= */
+
+    function getResultComment(score) {
+
+        const comments = {
+
+            perfect: [
+                "🧠 PERFECT RECALL. Your brain is officially showing off.",
+                "🔥 100%! At this point, we're not testing your memory anymore. We're testing everyone else's.",
+                "👑 Absolute memory monster. Someone needs to challenge you.",
+                "🚀 Perfect score. Your brain apparently has unlimited storage.",
+                "🧠 Your memory just walked into the room wearing sunglasses."
+            ],
+
+            excellent: [
+                "🔥 That's seriously impressive. Your memory is sharp.",
+                "🧠 Very strong recall. You clearly weren't here to play around.",
+                "👑 Memory monster territory. Respect.",
+                "⚡ Your brain was running on premium hardware today.",
+                "🔥 That's a score worth bragging about."
+            ],
+
+            great: [
+                "👏 Very impressive! Your brain was paying attention.",
+                "🧠 That's some seriously solid memory.",
+                "⚡ Sharp! You remembered more than most people would.",
+                "🔥 Your brain is doing its job remarkably well.",
+                "🏆 That's a score you can confidently show your friends."
+            ],
+
+            good: [
+                "👍 Not bad at all. Your brain survived the test.",
+                "🧠 Pretty sharp! A little more practice and you're dangerous.",
+                "😎 Solid performance. Your memory isn't messing around.",
+                "⚡ Good job. Now try beating it.",
+                "👏 That's actually pretty respectable."
+            ],
+
+            average: [
+                "🙂 Not terrible. Your brain has room for upgrades.",
+                "🧠 Your memory clocked in today... eventually.",
+                "😅 Decent effort. Your brain left a few items on read.",
+                "😂 Some memories stayed. Others chose freedom.",
+                "🤔 Your brain remembered enough to file a complaint.",
+                "📦 Memory storage: partially full."
+            ],
+
+            low: [
+                "😂 Your brain just asked for a reboot.",
+                "🥲 Those missing memories are probably still loading.",
+                "🧠 Your brain said: 'I saw it... but I'm not telling you.'",
+                "😂 Somewhere, those missing words are laughing at you.",
+                "💀 Your memory has officially entered airplane mode.",
+                "😅 Don't worry. Even your brain needs a coffee break."
+            ],
+
+            terrible: [
+                "💀 Your brain remembered approximately... vibes.",
+                "😂 The words were there. Your brain simply declined the invitation.",
+                "🥲 We may need to have a serious conversation with your memory.",
+                "🧠 Memory.exe has stopped responding.",
+                "😂 Your brain looked at the list and said 'good luck.'",
+                "💀 That wasn't a memory test. That was a disappearing-act competition."
+            ]
+
+        };
+
+
+        let category;
+
+        if (score === 100) {
+
+            category = comments.perfect;
+
+        } else if (score >= 90) {
+
+            category = comments.excellent;
+
+        } else if (score >= 75) {
+
+            category = comments.great;
+
+        } else if (score >= 55) {
+
+            category = comments.good;
+
+        } else if (score >= 35) {
+
+            category = comments.average;
+
+        } else if (score >= 15) {
+
+            category = comments.low;
+
+        } else {
+
+            category = comments.terrible;
+        }
+
+
+        return category[
+            Math.floor(
+                Math.random() * category.length
+            )
+        ];
+    }
+
+
+    /* =========================
+       SHOW RESULTS
+    ========================= */
+
+    function showResults(
         correct,
         wrong,
         missed,
-        userItems
-    );
+        answerResults,
+        remainingSequence
+    ) {
 
-}
+        document.getElementById("resultScore").textContent =
+            currentScore + "%";
 
+        document.getElementById("correctCount").textContent =
+            correct;
 
-/* ==========================================
-   SHOW RESULTS
-========================================== */
+        document.getElementById("wrongCount").textContent =
+            wrong;
 
-function showResults(
-    score,
-    correct,
-    wrong,
-    missed,
-    userItems
-) {
+        document.getElementById("missedCount").textContent =
+            missed;
 
 
-    document.getElementById(
-        "scoreNumber"
-    )
-        .textContent =
-        score + "%";
+        document.getElementById("resultComment").innerHTML =
+            getResultComment(currentScore);
 
 
-    document.getElementById(
-        "correctCount"
-    )
-        .textContent =
-        correct;
+        /* BEST SCORE */
 
+        if (currentScore > bestScore) {
 
-    document.getElementById(
-        "wrongCount"
-    )
-        .textContent =
-        wrong;
+            bestScore = currentScore;
 
-
-    document.getElementById(
-        "missedCount"
-    )
-        .textContent =
-        missed;
-
-
-    const review =
-        document.getElementById(
-            "reviewItems"
-        );
-
-
-    review.innerHTML = "";
-
-
-    /*
-        Copy sequence for review.
-    */
-
-    let remaining =
-        sequence.map(
-            item =>
-                item.toLowerCase()
-        );
-
-
-    /*
-        Show player's answers.
-
-        Green = correct
-        Red = wrong
-    */
-
-    userItems.forEach(
-        userItem => {
-
-
-            const span =
-                document.createElement(
-                    "span"
-                );
-
-
-            span.textContent =
-                userItem;
-
-
-            const matchIndex =
-                remaining.indexOf(
-                    userItem
-                );
-
-
-            if (
-                matchIndex !== -1
-            ) {
-
-
-                span.className =
-                    "review-correct";
-
-
-                remaining.splice(
-                    matchIndex,
-                    1
-                );
-
-            }
-
-            else {
-
-
-                span.className =
-                    "review-wrong";
-
-            }
-
-
-            review.appendChild(
-                span
+            localStorage.setItem(
+                "mindflashBest",
+                bestScore
             );
 
+            document.getElementById("bestScore").textContent =
+                bestScore + "%";
         }
-    );
 
 
-    /*
-        Show missed items.
-    */
+        /* REVIEW */
 
-    remaining.forEach(
-        item => {
+        const reviewList =
+            document.getElementById("reviewList");
 
-
-            const span =
-                document.createElement(
-                    "span"
-                );
+        reviewList.innerHTML = "";
 
 
-            span.textContent =
-                item;
+        answerResults.forEach(item => {
+
+            const row =
+                document.createElement("div");
+
+            row.className = "review-item";
+
+            row.innerHTML = `
+                <span>${escapeHTML(item.text)}</span>
+                <span class="${item.status}">
+                    ${item.status === "correct" ? "CORRECT" : "WRONG"}
+                </span>
+            `;
+
+            reviewList.appendChild(row);
+        });
 
 
-            span.className =
-                "review-missed";
+        remainingSequence.forEach(item => {
+
+            const row =
+                document.createElement("div");
+
+            row.className = "review-item";
+
+            row.innerHTML = `
+                <span>${escapeHTML(item)}</span>
+                <span class="missed">MISSED</span>
+            `;
+
+            reviewList.appendChild(row);
+        });
 
 
-            review.appendChild(
-                span
-            );
+        updateInviteLink();
 
-        }
-    );
+        showScreen("resultScreen");
+    }
 
 
-    /*
-        Reset share preview.
-    */
+    /* =========================
+       SOCIAL SHARING
+    ========================= */
 
-    document.getElementById(
-        "sharePreview"
-    )
-        .classList.remove(
-            "visible"
-        );
+    const WEBSITE_URL =
+        window.location.href;
 
 
-    showScreen(
-        "resultScreen"
-    );
+    function getShareMessage() {
 
-}
+        const comment =
+            getResultComment(currentScore);
 
+        return `🧠 I scored ${currentScore}% on MindFlash!
 
-/* ==========================================
-   CREATE SOCIAL SHARE MESSAGE
-========================================== */
+${comment}
 
-function getShareMessage() {
-
-
-    return `🧠 I scored ${currentScore}% on MindFlash!
-
-How much can you remember?
+Can you beat my score?
 
 👉 Check your MindFlash:
 ${WEBSITE_URL}`;
-
-}
-
-
-/* ==========================================
-   SHARE RESULT
-========================================== */
-
-async function shareResult() {
+    }
 
 
-    const message =
-        getShareMessage();
+    async function shareResult() {
+
+        const message =
+            getShareMessage();
+
+        if (navigator.share) {
+
+            try {
+
+                await navigator.share({
+
+                    title: "My MindFlash Score",
+
+                    text: message,
+
+                    url: WEBSITE_URL
+
+                });
+
+            } catch (error) {
+
+                console.log(
+                    "Share cancelled."
+                );
+            }
+
+        } else {
+
+            copyToClipboard(message);
+
+            showSharePreview(
+                message
+            );
+
+            alert(
+                "Your result has been copied. Paste it on Facebook, WhatsApp, Instagram, etc."
+            );
+        }
+    }
 
 
-    /*
-        Use the device's native
-        sharing system when available.
+    function copyResult() {
 
-        On mobile this can open:
+        const message =
+            getShareMessage();
 
-        WhatsApp
-        Facebook
-        Messages
-        Instagram
-        etc.
+        copyToClipboard(message);
 
-        depending on the device.
-    */
+        showSharePreview(message);
 
-    if (
-        navigator.share
-    ) {
+        alert(
+            "Your MindFlash result has been copied!"
+        );
+    }
 
 
-        try {
+    function copyToClipboard(text) {
+
+        if (navigator.clipboard) {
+
+            navigator.clipboard.writeText(text);
+
+        } else {
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.value = text;
+
+            document.body.appendChild(textarea);
+
+            textarea.select();
+
+            document.execCommand("copy");
+
+            textarea.remove();
+        }
+    }
 
 
-            await navigator.share({
+    function showSharePreview(message) {
 
-                title:
-                    "My MindFlash Score",
+        const preview =
+            document.getElementById(
+                "sharePreview"
+            );
 
-                text:
-                    message,
+        preview.textContent = message;
 
-                url:
-                    WEBSITE_URL
+        preview.style.display = "block";
+    }
+
+
+    function updateInviteLink() {
+
+        document.getElementById(
+            "inviteLink"
+        ).href = WEBSITE_URL;
+    }
+
+
+    /* =========================
+       SCREEN CONTROL
+    ========================= */
+
+    function showScreen(id) {
+
+        document
+            .querySelectorAll(".screen")
+            .forEach(screen => {
+
+                screen.classList.remove("active");
 
             });
 
 
-        }
-
-        catch (error) {
-
-            /*
-                User cancelled sharing.
-                Nothing needs to happen.
-            */
-
-        }
-
-
+        document
+            .getElementById(id)
+            .classList.add("active");
     }
 
-    else {
 
+    /* =========================
+       SHUFFLE
+    ========================= */
 
-        /*
-            If native sharing isn't available,
-            copy the message instead.
-        */
+    function shuffle(array) {
 
-        copyText(
-            message
-        );
+        const arr =
+            [...array];
 
-        showSharePreview(
-            message
-        );
+        for (
+            let i = arr.length - 1;
+            i > 0;
+            i--
+        ) {
 
-        alert(
-            "Your result has been copied. You can paste it into Facebook, WhatsApp or another social platform."
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   COPY RESULT
-========================================== */
-
-function copyResult() {
-
-
-    const message =
-        getShareMessage();
-
-
-    copyText(
-        message
-    );
-
-
-    showSharePreview(
-        message
-    );
-
-
-    /*
-        Change button text temporarily.
-    */
-
-    const button =
-        document.querySelector(
-            ".copy-btn"
-        );
-
-
-    const originalText =
-        button.textContent;
-
-
-    button.textContent =
-        "COPIED ✓";
-
-
-    setTimeout(() => {
-
-        button.textContent =
-            originalText;
-
-    }, 2000);
-
-}
-
-
-/* ==========================================
-   COPY TEXT
-========================================== */
-
-function copyText(
-    text
-) {
-
-
-    /*
-        Modern clipboard API.
-    */
-
-    if (
-        navigator.clipboard &&
-        window.isSecureContext
-    ) {
-
-
-        navigator.clipboard.writeText(
-            text
-        );
-
-
-    }
-
-    else {
-
-
-        /*
-            Fallback for local files
-            and older browsers.
-        */
-
-        const textarea =
-            document.createElement(
-                "textarea"
-            );
-
-
-        textarea.value =
-            text;
-
-
-        textarea.style.position =
-            "fixed";
-
-
-        textarea.style.left =
-            "-9999px";
-
-
-        document.body.appendChild(
-            textarea
-        );
-
-
-        textarea.select();
-
-
-        document.execCommand(
-            "copy"
-        );
-
-
-        document.body.removeChild(
-            textarea
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   SHOW SHARE PREVIEW
-========================================== */
-
-function showSharePreview(
-    message
-) {
-
-
-    const preview =
-        document.getElementById(
-            "sharePreview"
-        );
-
-
-    /*
-        Convert new lines into
-        visible HTML line breaks.
-    */
-
-    preview.innerHTML =
-        message
-            .replace(
-                /\n/g,
-                "<br>"
-            );
-
-
-    preview.classList.add(
-        "visible"
-    );
-
-}
-
-
-/* ==========================================
-   SCREEN MANAGEMENT
-========================================== */
-
-function showScreen(
-    screenId
-) {
-
-
-    const screens = [
-
-        "startScreen",
-
-        "memoryScreen",
-
-        "answerScreen",
-
-        "resultScreen"
-
-    ];
-
-
-    screens.forEach(
-        id => {
-
-
-            document.getElementById(
-                id
-            )
-                .classList.add(
-                    "hidden"
+            const j =
+                Math.floor(
+                    Math.random() * (i + 1)
                 );
 
+            [
+                arr[i],
+                arr[j]
+            ] = [
+                arr[j],
+                arr[i]
+            ];
         }
-    );
+
+        return arr;
+    }
 
 
-    document.getElementById(
-        screenId
-    )
-        .classList.remove(
-            "hidden"
-        );
+    /* =========================
+       SECURITY
+    ========================= */
 
-}
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+    }
 
 </script>
 
-
 </body>
 </html>
-```
